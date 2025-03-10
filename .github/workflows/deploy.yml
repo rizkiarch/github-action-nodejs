@@ -33,10 +33,10 @@ jobs:
     - name: Deploy via SSH
       uses: appleboy/ssh-action@v1.0.0
       with:
-        host: 23.12.212.46
+        host: 23.106.253.46
         username: hawakant
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 45011
+        port: 45022
         script: |
           cd /public_html
           git pull origin master
