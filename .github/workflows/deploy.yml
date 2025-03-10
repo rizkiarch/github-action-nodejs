@@ -1,4 +1,4 @@
-name: Deploy Node.js App
+name: Deploy Node.js App via SSH
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Get latest code
+    - name: Checkout Repository
       uses: actions/checkout@v4
 
     - name: Set up Node.js
@@ -24,19 +24,21 @@ jobs:
     - name: Copy .env-example to .env
       run: cp .env-example .env
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: npm install
 
-    - name: Deploy to FTP (Production)
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+    - name: Install PM2
+      run: npm install pm2 -g
+
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@v1.0.0
       with:
-        server: ${{ secrets.PROD_FTP_HOST }}
-        username: ${{ secrets.PROD_FTP_USERNAME }}
-        password: ${{ secrets.PROD_FTP_PASSWORD }}
-        local-dir: ./
-        server-dir: /public_html/
-        timeout: 190000
-    
-    - name: Restart PM2 Process
-      run: npx pm2 restart github-action-nodejs || npx pm2 start index.js --name github-action-nodejs
-      
+        host: 23.12.212.46
+        username: hawakant
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 45011
+        script: |
+          cd /public_html
+          git pull origin master
+          npm install --production
+          pm2 restart github-action-nodejs || pm2 start index.js --name github-action-nodejs
