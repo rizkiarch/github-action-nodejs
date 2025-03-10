@@ -10,7 +10,7 @@ app.use(express.json());
 
 // Endpoint for testing server
 app.get('/', (req, res) => {
-    res.send('Server berhasil berjalan di hosting jagoan');
+    res.send('Server berhasil berjalan di jagoan hosting');
 });
 
 // Jalankan server Express
