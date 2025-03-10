@@ -36,3 +36,7 @@ jobs:
         local-dir: ./
         server-dir: /public_html/
         timeout: 190000
+    
+    - name: Restart PM2 Process
+      run: npx pm2 restart github-action-nodejs || npx pm2 start index.js --name github-action-nodejs
+      
