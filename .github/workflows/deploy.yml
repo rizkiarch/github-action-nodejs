@@ -5,7 +5,7 @@ on:
     types:
       - closed
     branches:
-      - master
+      - master # Only run when a PR is merged into master
 
 jobs:
   deploy-production:
