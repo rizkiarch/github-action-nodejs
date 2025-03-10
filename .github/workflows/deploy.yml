@@ -32,6 +32,8 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 45022
         script: |
-          source /home/hawakant/nodevenv/digitalproduct.hawakan.top/ftpaccounttest/public_html/20/bin/activate && cd /home/hawakant/digitalproduct.hawakan.top/ftpaccounttest/public_html
-          npm install --production
-          pm2 restart github-action-nodejs || pm2 start index.js --name github-action-nodejs
+          source /home/hawakant/nodevenv/digitalproduct.hawakan.top/ftpaccounttest/public_html/20/bin/activate
+          cd /home/hawakant/digitalproduct.hawakan.top/ftpaccounttest/public_html
+          npm install --production --prefix ~/node_modules
+          /home/hawakant/.npm/_npx/5f7878ce38f1eb13/node_modules/.bin/pm2 restart github-action-nodejs || \
+          /home/hawakant/.npm/_npx/5f7878ce38f1eb13/node_modules/.bin/pm2 start index.js --name github-action-nodejs
