@@ -10,7 +10,7 @@ app.use(express.json());
 
 // Endpoint for testing server
 app.get('/', (req, res) => {
-    res.send('Server berhasil berjalan! selamat ya');
+    res.send('Server berhasil berjalan! dan ini yang terbaru');
 });
 
 // Jalankan server Express
