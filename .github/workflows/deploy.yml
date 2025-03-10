@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
+    - name: Get latest code
       uses: actions/checkout@v4
 
     - name: Set up Node.js
@@ -24,7 +24,20 @@ jobs:
     - name: Copy .env-example to .env
       run: cp .env-example .env
 
-    - name: Deploy via SSH
+    - name: Install dependencies
+      run: npm install
+
+    - name: Deploy to FTP (Production)
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.PROD_FTP_HOST }}
+        username: ${{ secrets.PROD_FTP_USERNAME }}
+        password: ${{ secrets.PROD_FTP_PASSWORD }}
+        local-dir: ./
+        server-dir: /public_html/
+        timeout: 190000
+
+    - name: Restart server via SSH
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: 23.106.253.46
